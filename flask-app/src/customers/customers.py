@@ -109,3 +109,33 @@ def get_show(showID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+# Get all customers ids only from the DB
+@customers.route('/showsids', methods=['GET'])
+def get_shows_ids():
+    cursor = db.get_db().cursor()
+    cursor.execute("SELECT title as label, showId as value FROM `Show`;")
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+
+# Get info on particular show
+@customers.route('/shows/submit', methods=['POST'])
+def add_new_show():
+    current_app.logger.info('Processing form data')
+    req_data = request.get_json()
+    current_app.logger.info(req_data)
+
+    show_id = req_data['showId']
+    cust_id = req_data['custId']
+
+    insert_stmt = 'INSERT INTO `Show To Customer` (showId, custId) VALUES ('
+    insert_stmt += str(show_id) + ', ' + str(cust_id) + ')'
+    return "Success"
