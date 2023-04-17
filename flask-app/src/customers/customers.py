@@ -136,4 +136,8 @@ def add_new_show():
 
     insert_stmt = 'INSERT INTO `Show To Customer` (showId, custId) VALUES ('
     insert_stmt += str(show_id) + ', ' + str(cust_id) + ')'
+
+    cursor = db.get_db().cursor()
+    cursor.execute(insert_stmt)
+    db.get_db().commit()
     return "Success"
