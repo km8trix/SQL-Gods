@@ -156,3 +156,19 @@ def del_show():
     cursor.execute(delete_stmt)
     db.get_db().commit()
     return "Success"
+
+# Get shows reviews
+@customers.route('/shows/<userID>/reviews/edit/<reviewID>', methods=['PUT'])
+def edit_show_review(userID, reviewID):
+    req_data = request.get_json()
+
+    description = req_data['reviewComment']
+    cust_id = req_data['custId']
+    review_id = req_data['reviewId']
+
+    put_stmt = 'UPDATE Review SET reviewComment = ' + description + ' WHERE custId = ' + str(cust_id) + ' AND reviewId = ' + str(review_id) + ';'
+
+    cursor = db.get_db().cursor()
+    cursor.execute(put_stmt)
+    db.get_db().commit()
+    return "Success"
