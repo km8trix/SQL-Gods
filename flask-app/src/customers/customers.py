@@ -129,9 +129,7 @@ def get_shows_ids():
 # Get info on particular show
 @customers.route('/shows/submit', methods=['POST'])
 def add_new_show():
-    current_app.logger.info('Processing form data')
     req_data = request.get_json()
-    current_app.logger.info(req_data)
 
     show_id = req_data['showId']
     cust_id = req_data['custId']
