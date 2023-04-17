@@ -69,7 +69,7 @@ def get_customer_reviews(userID):
 @customers.route('/customersids', methods=['GET'])
 def get_customers_ids():
     cursor = db.get_db().cursor()
-    cursor.execute('select custId from Customer')
+    cursor.execute("SELECT DISTINCT firstname + ' ' + lastname) as label, custId as value FROM users;")
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
