@@ -50,7 +50,7 @@ def get_customer_recommendations(userID):
     the_response.mimetype = 'application/json'
     return the_response
 
-# Get customer recommendations
+# Get customer reviews
 @customers.route('/customers/<userID>/reviews', methods=['GET'])
 def get_customer_reviews(userID):
     cursor = db.get_db().cursor()
@@ -70,6 +70,21 @@ def get_customer_reviews(userID):
 def get_customers_ids():
     cursor = db.get_db().cursor()
     cursor.execute("SELECT CONCAT(firstname, ' ', lastname) as label, custId as value FROM Customer;")
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+# Get shows reviews
+@customers.route('/customers/<userID>/reviews', methods=['GET'])
+def get_customer_reviews(userID):
+    cursor = db.get_db().cursor()
+    cursor.execute('select * from Review where showId = {0}'.format(userID))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
