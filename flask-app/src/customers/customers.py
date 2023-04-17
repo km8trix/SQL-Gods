@@ -141,3 +141,18 @@ def add_new_show():
     cursor.execute(insert_stmt)
     db.get_db().commit()
     return "Success"
+
+# Get info on particular show
+@customers.route('/shows/delete', methods=['DELETE'])
+def del_show():
+    req_data = request.get_json()
+
+    show_id = req_data['showId']
+    cust_id = req_data['custId']
+
+    delete_stmt = 'DELETE FROM `Show To Customer` WHERE showId = ' + str(show_id) + ' AND custId = ' + str(cust_id) + ';'
+
+    cursor = db.get_db().cursor()
+    cursor.execute(delete_stmt)
+    db.get_db().commit()
+    return "Success"
