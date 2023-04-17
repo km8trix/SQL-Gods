@@ -82,7 +82,7 @@ def get_customers_ids():
 
 # Get shows reviews
 @customers.route('/customers/<userID>/reviews', methods=['GET'])
-def get_customer_reviews(userID):
+def get_show_reviews(userID):
     cursor = db.get_db().cursor()
     cursor.execute('select * from Review where showId = {0}'.format(userID))
     row_headers = [x[0] for x in cursor.description]
