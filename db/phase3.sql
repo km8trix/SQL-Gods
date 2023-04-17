@@ -8104,7 +8104,7 @@ CREATE TABLE IF NOT EXISTS Ad
     adId         INT,
     timeShown    INT,
     clickCount   INT,
-    image        BLOB,
+    image        TEXT,
     demoID       INT,
     advertiserId INT,
     PRIMARY KEY (adId),

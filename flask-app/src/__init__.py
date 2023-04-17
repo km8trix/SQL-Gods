@@ -32,12 +32,10 @@ def create_app():
     # Import the various routes
     #from src.views import views
     from src.customers.customers import customers
-    from src.ads.ads  import ads
     from src.advertisers.advertisers  import advertisers
 
     # Register the routes that we just imported so they can be properly handled
     app.register_blueprint(customers)
-    app.register_blueprint(ads)
     app.register_blueprint(advertisers)
 
     return app
