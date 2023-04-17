@@ -39,7 +39,7 @@ def get_customer(userID):
 @customers.route('/customers/<userID>/recommendations', methods=['GET'])
 def get_customer_recommendations(userID):
     cursor = db.get_db().cursor()
-    cursor.execute('select title from Customer JOIN `Show To Customer` USING (custId) JOIN `Show` USING (showId) where custId = {0}'.format(userID))
+    cursor.execute('select showId, title AS Title, showDescription AS Description, showFormat AS Format, debutDate AS `Debut Date`, nextEpDate AS `Next Episode Date`, showStatus AS `Status`, runtime AS `Runtime` from Customer JOIN `Show To Customer` USING (custId) JOIN `Show` USING (showId) where custId = {0}'.format(userID))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -69,7 +69,7 @@ def get_customer_reviews(userID):
 @customers.route('/customersids', methods=['GET'])
 def get_customers_ids():
     cursor = db.get_db().cursor()
-    cursor.execute("SELECT DISTINCT firstname + ' ' + lastname) as label, custId as value FROM users;")
+    cursor.execute("SELECT CONCAT(firstname, ' ', lastname) as label, custId as value FROM Customer;")
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
