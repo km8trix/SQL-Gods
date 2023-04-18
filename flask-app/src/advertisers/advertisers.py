@@ -118,3 +118,33 @@ def edit_ad_budget(adID):
     db.get_db().commit()
     return "Success"
 
+# Post a new ad
+@advertisers.route('/ad/submit', methods=['POST'])
+def add_new_show():
+    req_data = request.get_json()
+
+    image = req_data['image']
+    demo_id = req_data['demoId']
+    advertiser_id = req_data['advertiserId']
+    ad_id = req_data['adId']
+
+    insert_stmt = 'INSERT INTO Ad (image, demoId, advertiserId, adId) VALUES ("' + image + '", '+ str(demo_id) + ', ' + str(advertiser_id) + ', ' + str(ad_id) + ');'
+
+    cursor = db.get_db().cursor()
+    cursor.execute(insert_stmt)
+    db.get_db().commit()
+    return "Success"
+
+# Get info on particular show
+@advertisers.route('/ad/delete', methods=['DELETE'])
+def del_show():
+    req_data = request.get_json()
+
+    ad_id = req_data['adId']
+
+    delete_stmt = 'DELETE FROM Ad WHERE adId = ' + str(ad_id) + ';'
+
+    cursor = db.get_db().cursor()
+    cursor.execute(delete_stmt)
+    db.get_db().commit()
+    return "Success"
