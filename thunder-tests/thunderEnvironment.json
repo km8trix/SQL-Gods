@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "_id": "1aaf4d5d-fc38-417a-beab-13053d39ed25",
+    "name": "inclass-tests",
+    "default": true,
+    "sortNum": 10000,
+    "created": "2023-03-23T15:11:33.590Z",
+    "modified": "2023-03-23T15:11:33.590Z",
+    "data": [
+      {
+        "name": "ip",
+        "value": "127.0.0.1"
+      },
+      {
+        "name": "port",
+        "value": "4000"
+      }
+    ]
+  }
+]

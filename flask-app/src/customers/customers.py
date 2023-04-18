@@ -105,7 +105,7 @@ def add_new_show():
     cust_id = req_data['custId']
 
     insert_stmt = 'INSERT INTO `Show To Customer` (showId, custId) VALUES ('
-    insert_stmt += str(show_id) + ', ' + str(cust_id) + ')'
+    insert_stmt += str(show_id) + ', ' + str(cust_id) + ') ON DUPLICATE KEY UPDATE showId = showId'
 
     cursor = db.get_db().cursor()
     cursor.execute(insert_stmt)
@@ -133,10 +133,8 @@ def edit_show_review(userID, reviewID):
     req_data = request.get_json()
 
     description = req_data['reviewComment']
-    cust_id = req_data['custId']
-    review_id = req_data['reviewId']
 
-    put_stmt = 'UPDATE Review SET reviewComment = ' + description + ' WHERE custId = ' + str(cust_id) + ' AND reviewId = ' + str(review_id) + ';'
+    put_stmt = 'UPDATE Review SET reviewComment = "' + description + '" WHERE custId = ' + str(userID) + ' AND reviewId = ' + str(reviewID) + ';'
 
     cursor = db.get_db().cursor()
     cursor.execute(put_stmt)

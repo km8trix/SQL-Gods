@@ -71,7 +71,7 @@ def get_adids_ads(adID):
     return the_response
 
 
-# Get particular advertiser from the DB
+# Get particular advertiser's ads from the DB
 @advertisers.route('/advertisers/<advertiserID>/ads', methods=['GET'])
 def get_advertisers_ads(advertiserID):
     cursor = db.get_db().cursor()
@@ -113,21 +113,21 @@ def add_new_show():
     advertiser_id = req_data['advertiserId']
     ad_id = req_data['adId']
 
-    insert_stmt = 'INSERT INTO Ad (image, demoId, advertiserId, adId) VALUES ("' + image + '", '+ str(demo_id) + ', ' + str(advertiser_id) + ', ' + str(ad_id) + ');'
+    insert_stmt = 'INSERT INTO Ad (image, demoId, advertiserId, adId) VALUES ("' + image + '", '+ str(demo_id) + ', ' + str(advertiser_id) + ', ' + str(ad_id) + ') ON DUPLICATE KEY UPDATE image = image;'
 
     cursor = db.get_db().cursor()
     cursor.execute(insert_stmt)
     db.get_db().commit()
     return "Success"
 
-# Get info on particular show
+# Delete an ad
 @advertisers.route('/ad/delete', methods=['DELETE'])
 def del_show():
     req_data = request.get_json()
 
     ad_id = req_data['adId']
 
-    delete_stmt = 'DELETE FROM Ad WHERE adId = ' + str(ad_id) + ';'
+    delete_stmt = 'DELETE FROM `Ad To Page Data` WHERE adId = ' + str(ad_id) + ';'
 
     cursor = db.get_db().cursor()
     cursor.execute(delete_stmt)
