@@ -91,7 +91,7 @@ def get_ad_metrics(adID):
 def get_advertisers_ads(advertiserID):
     cursor = db.get_db().cursor()
 
-    cursor.execute('select adId, timeShown, clickCount, image, demoID, advertiserId, budgetId, amount, budgetInterval, payment from Ad JOIN Budget ON Ad.adId = Budget.adId where advertiserId = {0}'.format(advertiserID))
+    cursor.execute('select Ad.adId, timeShown, clickCount, image, demoID, advertiserId, budgetId, amount, budgetInterval, payment from Ad JOIN Budget ON Ad.adId = Budget.adId where advertiserId = {0}'.format(advertiserID))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
