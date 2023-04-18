@@ -9122,7 +9122,7 @@ CREATE TABLE IF NOT EXISTS Budget
     budgetId       INT,
     amount         DECIMAL(10, 2),
     budgetInterval INT,
-    payment        DECIMAL(10, 2),
+    payment        INT,
     adId           INT,
     PRIMARY KEY (budgetId),
     CONSTRAINT fk_budget_adId
