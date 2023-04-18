@@ -5,7 +5,7 @@ from src import db
 
 advertisers = Blueprint('advertisers', __name__)
 
-# Get all advertisers from the DB
+# Get particular advertiser from the DB
 @advertisers.route('/advertisers/<advertiserID>', methods=['GET'])
 def get_advertisers(advertiserID):
     cursor = db.get_db().cursor()
@@ -86,16 +86,32 @@ def get_ad_metrics(adID):
     the_response.mimetype = 'application/json'
     return the_response
 
-# Get shows reviews
-@advertisers.route('/shows/<userID>/reviews/edit/<reviewID>', methods=['PUT'])
-def edit_show_review(userID, reviewID):
+# Get particular advertiser from the DB
+@advertisers.route('/advertisers/<advertiserID>/ads', methods=['GET'])
+def get_advertisers_ads(advertiserID):
+    cursor = db.get_db().cursor()
+
+    cursor.execute('select * from Ad JOIN Budget where advertiserId = {0}'.format(advertiserID))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+# Edit an ad's budget
+@advertisers.route('/ads/<adID>/edit', methods=['PUT'])
+def edit_ad_budget(adID):
     req_data = request.get_json()
 
-    description = req_data['reviewComment']
-    cust_id = req_data['custId']
-    review_id = req_data['reviewId']
+    new_amount = req_data['amount']
+    new_budget_interval = req_data['budgetInterval']
+    new_payment = req_data['payment']
 
-    put_stmt = 'UPDATE Review SET reviewComment = ' + description + ' WHERE custId = ' + str(cust_id) + ' AND reviewId = ' + str(review_id) + ';'
+    put_stmt = 'UPDATE Budget SET amount = ' + str(new_amount) + ', budgetInterval = ' + str(new_budget_interval) + ', payment = ' + str(new_payment) + ' WHERE adId = ' + str(adID) + ';'
 
     cursor = db.get_db().cursor()
     cursor.execute(put_stmt)
