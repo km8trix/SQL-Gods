@@ -5,22 +5,6 @@ from src import db
 
 advertisers = Blueprint('advertisers', __name__)
 
-# Get particular advertiser from the DB
-@advertisers.route('/advertisers/<advertiserID>', methods=['GET'])
-def get_advertisers(advertiserID):
-    cursor = db.get_db().cursor()
-
-    cursor.execute('select advertiserId, advertiserName from Advertiser where advertiserId = {0}'.format(advertiserID))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
-
 # Get all ads from the DB
 @advertisers.route('/ads', methods=['GET'])
 def get_ads():
@@ -86,20 +70,6 @@ def get_adids_ads(adID):
     the_response.mimetype = 'application/json'
     return the_response
 
-# Get ad detail for ads with particular adId's metrics
-@advertisers.route('/ads/<adID>/metrics', methods=['GET'])
-def get_ad_metrics(adID):
-    cursor = db.get_db().cursor()
-    cursor.execute('select adId, timeShown, image, clickCount, demoID, advertiserId from Ad where adId = {0}'.format(adID))
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
 
 # Get particular advertiser from the DB
 @advertisers.route('/advertisers/<advertiserID>/ads', methods=['GET'])
