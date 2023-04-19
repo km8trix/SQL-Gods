@@ -18,3 +18,4 @@ This repo contains a boilerplate setup for spinning up 3 Docker containers:
 
 
 
+## Video Demo Link: https://youtu.be/B_6sb5mkhtk
