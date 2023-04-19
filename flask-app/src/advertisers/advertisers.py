@@ -89,7 +89,7 @@ def get_advertisers_ads(advertiserID):
 
 # Edit an ad's budget
 @advertisers.route('/ads/<adID>/edit', methods=['PUT'])
-def edit_ad_budget(adID):
+def edit_ad_info(adID):
     req_data = request.get_json()
 
     new_amount = req_data['amount']
